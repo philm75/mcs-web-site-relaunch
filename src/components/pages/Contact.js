@@ -12,7 +12,6 @@ class ContactPage extends Component {
 
     state = {
       yourName: '',
-      yourEmailAddress: '',
       yourPhoneNumber: '',
       yourCompanyName: '',
       yourMessage: '',
@@ -26,8 +25,30 @@ class ContactPage extends Component {
       event.preventDefault();
 
       this.setState({errors: {}});
-      // todo add validation to check all fields are provided.
-      // todo fire email....
+
+      const { yourName, yourEmail, yourPhoneNumber, yourMessage, } = this.state;
+      
+      if (yourName === '') {
+        this.setState({ errors: { yourName: 'Your Name is required' } });
+        return;
+      }
+
+      if (yourPhoneNumber === '') {
+        this.setState({ errors: { yourPhoneNumber: 'Your Phone Number is required' } });
+        return;
+      }
+
+      if (yourEmail === '') {
+        this.setState({ errors: { yourEmail: 'Your Email Address is required' } });
+        return;
+      }
+
+      if (yourMessage === '') {
+        this.setState({ errors: { yourMessage: 'Your Message is required' } });
+        return;
+      }
+      
+      // TODO fire email....
     }
 
     render() {
@@ -68,7 +89,7 @@ class ContactPage extends Component {
                             </div>
                             <div className="col-sm-6">
                               <div className="form-group">                          
-                                <TextInputGroup label="Company Name"
+                                <TextInputGroup label="Company Name (optional)"
                                                 name="yourCompanyName"
                                                 placeholder="Enter your company name"
                                                 value={yourCompanyName}
