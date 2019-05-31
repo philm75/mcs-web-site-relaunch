@@ -21,7 +21,7 @@ const BusinessHeader = props => {
 }
     
 BusinessHeader.defaultProps = {
-    message: 'We build bespoke software for your business enterprise.'
+    message: 'We build custom software for your business enterprise.'
 };
       
 BusinessHeader.propTypes = {

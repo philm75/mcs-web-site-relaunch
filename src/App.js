@@ -7,6 +7,7 @@ import BusinessHeader from './components/layout/BusinessHeader';
 
 import HomePage from './components/pages/Home';
 import ContactPage from './components/pages/Contact';
+import ServicesPage from './components/pages/Services';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <Route exact path="/" component={HomePage} />
             <Route exact path="/Home" component={HomePage} />
             <Route exact path="/Contact" component={ContactPage} />
+            <Route exact path="/Services" component={ServicesPage} />
           </Switch>        
         </div>
         <Footer/>

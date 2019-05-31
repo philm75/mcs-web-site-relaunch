@@ -10,7 +10,7 @@ body {
   
   .business-header {
     height: 50vh;
-    min-height: 300px;
+    min-height: 250px;
     background: url("../images/background.jpg") center center no-repeat scroll;
     -webkit-background-size: cover;
     -moz-background-size: cover;

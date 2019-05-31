@@ -1,7 +1,11 @@
 import React, { Component, Fragment } from 'react';
 import { withRouter } from 'react-router-dom';
-
 import PropTypes from 'prop-types';
+
+import axios from 'axios';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPhone } from '@fortawesome/free-solid-svg-icons';
 
 import TextInputGroup from '../layout/InputTextGroup';
 import TextAreaInputGroup from '../layout/InputTextAreaGroup';
@@ -11,6 +15,7 @@ import { CompanyDetails } from '../common/CompanyDetails';
 class ContactPage extends Component {
 
     state = {
+      mailSent: '',      
       yourName: '',
       yourPhoneNumber: '',
       yourCompanyName: '',
@@ -26,7 +31,7 @@ class ContactPage extends Component {
 
       this.setState({errors: {}});
 
-      const { yourName, yourEmail, yourPhoneNumber, yourMessage, } = this.state;
+      const { yourName, yourEmail, yourPhoneNumber, yourMessage, yourCompanyName } = this.state;
       
       if (yourName === '') {
         this.setState({ errors: { yourName: 'Your Name is required' } });
@@ -48,11 +53,34 @@ class ContactPage extends Component {
         return;
       }
       
-      // TODO fire email....
+      axios({
+        method: 'post',
+        url: 'http://localhost:3000/php/mailer.php',
+        headers: { 'content-type': 'application/json' },
+        data: {
+          name: yourName,
+          email: yourEmail,
+          message: yourMessage,
+          phoneNumber: yourPhoneNumber,
+          companyName: yourCompanyName
+        }
+      }).then(result => {
+        this.setState({
+          mailSent: result.data.sent,
+          yourName: '',
+          yourPhoneNumber: '',
+          yourCompanyName: '',
+          yourMessage: '',
+          yourEmail: '',
+          errors: {}  
+        });
+      }).catch(error => {
+        this.setState({error: error.message});
+      });
     }
 
     render() {
-      const { companyName, addressLine1, addressLine2, postalCode, telephoneNo, emailAddress } = this.props;
+      const { companyName, addressLine1, addressLine2, postalCode, telephoneNo, emailAddress, displayEmailAddress } = this.props;
       const { yourName, yourCompanyName, yourPhoneNumber, yourEmail, yourMessage, errors } = this.state;
       const emailTo = 'mailTo:' + emailAddress;
 
@@ -73,8 +101,8 @@ class ContactPage extends Component {
                     </div>                
                 </div>
                 <div className="row">
-                    <div className="col-sm-8">                
-                        <form onSubmit={this.onSubmit} noValidate>
+                    <div className="col-sm-8 pt-3" style={{backgroundColor: "#f9f9f9"}}>                
+                        <form onSubmit={this.onSubmit} noValidate method='POST' action='mailer.php'>
                           <div className="row">
                             <div className="col-sm-6">
                               <div className="form-group">
@@ -89,7 +117,7 @@ class ContactPage extends Component {
                             </div>
                             <div className="col-sm-6">
                               <div className="form-group">                          
-                                <TextInputGroup label="Company Name (optional)"
+                                <TextInputGroup label="Company Name"
                                                 name="yourCompanyName"
                                                 placeholder="Enter your company name"
                                                 value={yourCompanyName}
@@ -106,7 +134,6 @@ class ContactPage extends Component {
                                                 name="yourPhoneNumber"
                                                 placeholder="Enter your phone no."
                                                 value={yourPhoneNumber}
-                                                type="tel"
                                                 required={true}
                                                 onChange={this.onChange}
                                                 error={errors.yourPhoneNumber} />
@@ -139,7 +166,7 @@ class ContactPage extends Component {
                               </div>
                             </div>
                           </div>
-                          <div className="row mb-3">
+                          <div className="row mb-3 float-right">
                             <div className="col-sm-12">
                               <input type="submit"value="Send" className="btn btn-primary" />  
                             </div>
@@ -154,15 +181,14 @@ class ContactPage extends Component {
                         <br />
                         {addressLine2}
                         <br />
-                        {postalCode}                      
+                        {postalCode}
                         <br />
+                        <FontAwesomeIcon icon={faPhone} />{'  '}{telephoneNo}
                       </address>
                       <address>
-                        <abbr title="Phone">P:</abbr>
-                        {telephoneNo}
+                        <strong>Email</strong>
                         <br />
-                        <abbr title="Email">E:</abbr>
-                        <a href={emailTo}>{emailAddress}</a>
+                        <a href={emailTo}>{'  '}{displayEmailAddress}</a>
                       </address>                      
                     </div>
                 </div>
@@ -177,7 +203,8 @@ ContactPage.defaultProps = {
   addressLine2: CompanyDetails.addressLine2,
   postalCode: CompanyDetails.postalCode,
   telephoneNo: CompanyDetails.telephoneNo,
-  emailAddress: CompanyDetails.emailAddress
+  emailAddress: CompanyDetails.emailAddress,
+  displayEmailAddress: CompanyDetails.displayEmailAddress
 };
     
 ContactPage.propTypes = {
@@ -186,7 +213,8 @@ ContactPage.propTypes = {
   addressLine2: PropTypes.string.isRequired,
   postalCode: PropTypes.string.isRequired,
   telephoneNo: PropTypes.string.isRequired,
-  emailAddress: PropTypes.string.isRequired
+  emailAddress: PropTypes.string.isRequired,
+  displayEmailAddress: PropTypes.string.isRequired
 };
 
 export default withRouter(ContactPage);
