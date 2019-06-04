@@ -1,6 +1,8 @@
 import React, { Fragment, Component } from 'react';
 import { withRouter } from 'react-router-dom';
 
+import PageHeader from '../layout/PageHeader';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCode, faDatabase, faServer } from '@fortawesome/free-solid-svg-icons';
 
@@ -9,11 +11,7 @@ class ServicesPage extends Component {
     render() {
         return (
             <Fragment>
-                <div className="row">
-                    <div className="col-sm-12">
-                        <h2 className="mt-4 text-center">Services we provide</h2>
-                    </div>
-                </div>
+                <PageHeader name={'Services we provide'} />
                 <div className="row">
                     <div className="col-sm-12">
                         <p>Our software design &amp; development services solve business problems, help businesses grow and succeed.  Our software solutions are productive, engaging and robust that modern businesses demand.  We build the right solutions with modern technologies, architectures, frameworks and tools.</p>

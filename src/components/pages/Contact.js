@@ -5,10 +5,11 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPhone } from '@fortawesome/free-solid-svg-icons';
+import { faPhone, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 
 import TextInputGroup from '../layout/InputTextGroup';
 import TextAreaInputGroup from '../layout/InputTextAreaGroup';
+import PageHeader from '../layout/PageHeader';
 
 import { CompanyDetails } from '../common/CompanyDetails';
 
@@ -86,18 +87,18 @@ class ContactPage extends Component {
 
       return (
             <Fragment>
+                <PageHeader name={'Contact Us'} />
                 <div className="row">
                     <div className="col-sm-12">
-                        <h2 className="mt-4">Contact Us</h2>
-                        <p>For more information on our services please do not hestitate to contact us.</p>                            
+                      <p><FontAwesomeIcon icon={faInfoCircle} />{' '}For more information on our services please do not hestitate to contact us.</p>
                     </div>
                 </div>
                 <div className="row">
                     <div className="col-sm-8">
-                        <h3 className="mt-4">Send us a message</h3>
+                        <h4 className="mt-4">Send us a message</h4>
                     </div>
                     <div className="col-sm-4">
-                      <h3 className="mt-4">Contact Information</h3>
+                      <h4 className="mt-4">Contact Information</h4>
                     </div>                
                 </div>
                 <div className="row">
