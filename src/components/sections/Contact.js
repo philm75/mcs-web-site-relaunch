@@ -1,11 +1,7 @@
-import React, { Component, Fragment } from 'react';
-import { withRouter } from 'react-router-dom';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import axios from 'axios';
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPhone, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 
 import TextInputGroup from '../layout/InputTextGroup';
 import TextAreaInputGroup from '../layout/InputTextAreaGroup';
@@ -81,16 +77,19 @@ class ContactPage extends Component {
     }
 
     render() {
-      const { companyName, addressLine1, addressLine2, postalCode, telephoneNo, emailAddress, displayEmailAddress } = this.props;
+      const { telephoneNo, emailAddress, displayEmailAddress } = this.props;
       const { yourName, yourCompanyName, yourPhoneNumber, yourEmail, yourMessage, errors } = this.state;
       const emailTo = 'mailTo:' + emailAddress;
 
       return (
-            <Fragment>
+        <div id="contact" className="about-area area-padding">
+            <div className="container">
                 <PageHeader name={'Contact Us'} />
                 <div className="row">
                     <div className="col-sm-12">
-                      <p><FontAwesomeIcon icon={faInfoCircle} />{' '}For more information on our services please do not hestitate to contact us.</p>
+                      <p>
+                        Thank you for your interest in our services. Please fill out the form below or e-mail us and we will get back to you promptly regarding your request.
+                      </p>
                     </div>
                 </div>
                 <div className="row">
@@ -98,10 +97,10 @@ class ContactPage extends Component {
                         <h4 className="mt-4">Send us a message</h4>
                     </div>
                     <div className="col-sm-4">
-                      <h4 className="mt-4">Contact Information</h4>
+                      <h4 className="mt-4">Contact</h4>
                     </div>                
                 </div>
-                <div className="row">
+                <div className="row mb-4">
                     <div className="col-sm-8 pt-3" style={{backgroundColor: "#f9f9f9"}}>                
                         <form onSubmit={this.onSubmit} noValidate method='POST' action='mailer.php'>
                           <div className="row">
@@ -169,53 +168,40 @@ class ContactPage extends Component {
                           </div>
                           <div className="row mb-3 float-right">
                             <div className="col-sm-12">
-                              <input type="submit"value="Send" className="btn btn-primary" />  
+                              <input type="submit"value="SEND" className="btn btn-primary" />  
                             </div>
                           </div>                                                                                                                                                                                              
                         </form>
                     </div>
                     <div className="col-sm-4">
-                      <strong>{companyName}</strong>
-                      <br />
                       <address>
-                        {addressLine1}
-                        <br />
-                        {addressLine2}
-                        <br />
-                        {postalCode}
-                        <br />
-                        <FontAwesomeIcon icon={faPhone} />{'  '}{telephoneNo}
+                        <strong>By Phone</strong>   
+                        <br />                     
+                        {telephoneNo}
                       </address>
                       <address>
-                        <strong>Email</strong>
+                        <strong>By Email</strong>
                         <br />
                         <a href={emailTo}>{'  '}{displayEmailAddress}</a>
                       </address>                      
                     </div>
                 </div>
-            </Fragment>    
+            </div>
+          </div>    
         );
     }
 }
 
 ContactPage.defaultProps = {
-  companyName: CompanyDetails.companyName,
-  addressLine1: CompanyDetails.addressLine1,
-  addressLine2: CompanyDetails.addressLine2,
-  postalCode: CompanyDetails.postalCode,
   telephoneNo: CompanyDetails.telephoneNo,
   emailAddress: CompanyDetails.emailAddress,
   displayEmailAddress: CompanyDetails.displayEmailAddress
 };
     
 ContactPage.propTypes = {
-  companyName: PropTypes.string.isRequired,
-  addressLine1: PropTypes.string.isRequired,
-  addressLine2: PropTypes.string.isRequired,
-  postalCode: PropTypes.string.isRequired,
   telephoneNo: PropTypes.string.isRequired,
   emailAddress: PropTypes.string.isRequired,
   displayEmailAddress: PropTypes.string.isRequired
 };
 
-export default withRouter(ContactPage);
+export default ContactPage;
