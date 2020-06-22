@@ -1,37 +1,64 @@
-import React, { Fragment } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link, withRouter } from 'react-router-dom';
 
-import HeaderLink from './HeaderLink';
+const links = [
+    {name: 'Home', link: '#header', active: false},
+    {name: 'About', link: '#about', active: false},
+    {name: 'Services', link: '#services', active: false},
+    {name: 'Contact', link: '#contact', active: false}
+];
 
-const Header = props => {
-    const { branding, location } = props;
-    const { pathname } = location;
+class Header extends Component {
 
-    return (
-        <Fragment>
-            <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-                <div className="container">
-                    <Link to="/Home" className="navbar-brand">
-                        {branding}
-                    </Link>
-                    <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                        <span className="navbar-toggler-icon"></span>
-                    </button>
-                    <div className="collapse navbar-collapse" id="navbarResponsive">
-                        <ul className="navbar-nav ml-auto">
-                            <HeaderLink currentPath={pathname} name="Home" link="/Home"/>
-                            <HeaderLink currentPath={pathname} name="Services" link="/Services"/>
-                            <HeaderLink currentPath={pathname} name="Portfolio" link="/Portfolio"/>
-                            <HeaderLink currentPath={pathname} name="Contact" link="/Contact"/>
+    state = {
+        headerLinks: [
+            ...links
+        ]
+    }
+ 
+    onLinkClick = (name) => {
+        this.setState((prevState, props) => ({
+            headerLinks: [
+                ...prevState.headerLinks.map(headerLink => {
+                    return {
+                        name: headerLink.name, 
+                        link: headerLink.link, 
+                        active: (headerLink.name === name ? true : false)
+                    }
+                })                
+            ] 
+        }))
+    }
+
+    render() {
+        const { branding} = this.props;
+        return (
+            <header id="header" className="fixed-top">
+                <div className="container d-flex">    
+                    <div className="logo mr-auto">
+                        <h1>
+                            <a href="index.html">
+                                {branding}
+                            </a>
+                        </h1>
+                    </div>    
+                    <nav className="nav-menu d-none d-lg-block">
+                        <ul>
+                            {this.state.headerLinks.map((item, i) => (
+                                <li key={i} className={item.active ? 'active' : null}>
+                                    <a href={item.link} onClick={() => {this.onLinkClick(item.name)}}>
+                                        {item.name}
+                                    </a>
+                                </li>
+                            ))}
                         </ul>
-                    </div>
+                    </nav>    
                 </div>
-            </nav>
-        </Fragment>
-    );
+            </header>
+        )
+    }    
 }
-    
+
 Header.defaultProps = {
     branding: 'Merrilees Consultant Services'
 };
@@ -40,4 +67,4 @@ Header.propTypes = {
     branding: PropTypes.string.isRequired
 };
       
-export default withRouter(Header);
+export default Header;

@@ -1,16 +1,16 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 const PageHeader = props => {
     const { name } = props;
     return (
-        <Fragment>
-            <div className="row">
-                <div className="col-sm-12">
-                    <h2 className="mt-4 text-center">{name}</h2>
+        <div className="row">
+            <div className="col-md-12 col-sm-12 col-xs-12">
+                <div className="section-headline text-center">
+                    <h2>{name}</h2>
                 </div>
             </div>
-        </Fragment>
+        </div>
     );    
 };
 

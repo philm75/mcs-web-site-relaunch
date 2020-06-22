@@ -1,33 +1,30 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronUp } from '@fortawesome/free-solid-svg-icons';
+
 
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import BusinessHeader from './components/layout/BusinessHeader';
 
-import HomePage from './components/pages/Home';
-import ContactPage from './components/pages/Contact';
-import ServicesPage from './components/pages/Services';
-import PortfolioPage from './components/pages/Portfolio';
+import About from './components/sections/About';
+import ContactPage from './components/sections/Contact';
+import Services from './components/sections/Services';
 
 function App() {
   return (
-    <Router>
-      <div className="App">
+    <div className="App">
         <Header/>
         <BusinessHeader />
-        <div className="container">
-          <Switch>
-            <Route exact path="/" component={HomePage} />
-            <Route exact path="/Home" component={HomePage} />
-            <Route exact path="/Contact" component={ContactPage} />
-            <Route exact path="/Services" component={ServicesPage} />
-            <Route exact path="/Portfolio" component={PortfolioPage} />
-          </Switch>        
-        </div>
+        <main id="main">
+          <About />
+          <Services />
+          <ContactPage />
+        </main>
         <Footer/>
-      </div>
-    </Router>
+        <a href="#bottom" className="back-to-top"><FontAwesomeIcon icon={faChevronUp} /></a>
+    </div>
   );
 }
 
