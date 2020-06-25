@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 const links = [
-    {name: 'Home', link: '#header', active: false},
+    {name: 'Home', link: '#top', active: false},
     {name: 'About', link: '#about', active: false},
     {name: 'Services', link: '#services', active: false},
     {name: 'Contact', link: '#contact', active: false}

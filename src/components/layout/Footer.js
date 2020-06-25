@@ -8,15 +8,25 @@ const Footer = props => {
     const { companyName, registration } = props;
 
     return (
-        <footer className="py-5">
-            <div className="container">
-                <p className="m-0 text-center text-white">Copyright &copy; {companyName}</p>
-                <FooterText text={registration} />
+      <footer>
+        <div className="footer-area-bottom">
+          <div className="container">
+            <div className="row">
+              <div className="col-md-12 col-sm-12 col-xs-12">
+                <div className="copyright text-center">
+                  <p>
+                    © Copyright <strong>{companyName}</strong>. 
+                  </p>
+                  <FooterText text={registration} />
+                </div>
+              </div>
             </div>
-        </footer>
+          </div>
+        </div>
+      </footer>
     );
 }
-    
+  
 Footer.defaultProps = {
     companyName: CompanyDetails.companyName,
     registration: CompanyDetails.registration

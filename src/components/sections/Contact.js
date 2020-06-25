@@ -13,11 +13,11 @@ class ContactPage extends Component {
 
     state = {
       mailSent: '',      
-      yourName: '',
-      yourPhoneNumber: '',
-      yourCompanyName: '',
-      yourMessage: '',
-      yourEmail: '',
+      name: '',
+      phoneNumber: '',
+      companyName: '',
+      message: '',
+      email: '',
       errors: {}  
     };
     
@@ -28,57 +28,85 @@ class ContactPage extends Component {
 
       this.setState({errors: {}});
 
-      const { yourName, yourEmail, yourPhoneNumber, yourMessage, yourCompanyName } = this.state;
+      const { name, email, phoneNumber, message, companyName } = this.state;
       
-      if (yourName === '') {
-        this.setState({ errors: { yourName: 'Your Name is required' } });
+      if (name === '') {
+        this.setState({ errors: { name: 'Your Name is required' } });
         return;
       }
 
-      if (yourPhoneNumber === '') {
-        this.setState({ errors: { yourPhoneNumber: 'Your Phone Number is required' } });
+      if (phoneNumber === '') {
+        this.setState({ errors: { phoneNumber: 'Your Phone Number is required' } });
         return;
       }
 
-      if (yourEmail === '') {
-        this.setState({ errors: { yourEmail: 'Your Email Address is required' } });
+      if (email === '') {
+        this.setState({ errors: { email: 'Your Email Address is required' } });
         return;
       }
 
-      if (yourMessage === '') {
-        this.setState({ errors: { yourMessage: 'Your Message is required' } });
+      if (message === '') {
+        this.setState({ errors: { message: 'Your Message is required' } });
         return;
       }
       
-      axios({
-        method: 'post',
-        url: 'http://localhost:3000/php/mailer.php',
-        headers: { 'content-type': 'application/json' },
-        data: {
-          name: yourName,
-          email: yourEmail,
-          message: yourMessage,
-          phoneNumber: yourPhoneNumber,
-          companyName: yourCompanyName
+      const data = {
+        service_id: process.env.REACT_APP_SERVICE_ID,
+        template_id: process.env.REACT_APP_TEMPLATE_ID,
+        user_id: process.env.REACT_APP_USER_ID,
+        template_params: {
+          email : email,        
+          subject : 'Contact us notification', 
+          name: name,
+          message: message,
+          phoneNumber: phoneNumber,
+          companyName: companyName
         }
-      }).then(result => {
+      }
+      
+      axios.post('https://api.emailjs.com/api/v1.0/email/send', data).then((response) => {
         this.setState({
-          mailSent: result.data.sent,
-          yourName: '',
-          yourPhoneNumber: '',
-          yourCompanyName: '',
-          yourMessage: '',
-          yourEmail: '',
+          mailSent: 'Your message has been sent successfully.',
+          name: '',
+          phoneNumber: '',
+          companyName: '',
+          message: '',
+          email: '',
           errors: {}  
         });
-      }).catch(error => {
-        this.setState({error: error.message});
+      }).catch((error) => {
+        this.setState({
+          mailSent: 'Unable to send your message, please contact us by phone or email.',
+          name: '',
+          phoneNumber: '',
+          companyName: '',
+          message: '',
+          email: '',
+          errors: {}  
+        });
       });
+    }
+
+    renderMessage() {
+      const divStyle = {        
+        backgroundColor: '#f9f9f9',
+        borderColor: '#f9f9f9'
+      }
+
+      return (
+        <div className="row">
+          <div className="col-sm-8 alert alert-light" role="alert" style={divStyle}>
+            <strong>
+              {this.state.mailSent}
+            </strong>
+          </div>
+        </div>        
+      )
     }
 
     render() {
       const { telephoneNo, emailAddress, displayEmailAddress } = this.props;
-      const { yourName, yourCompanyName, yourPhoneNumber, yourEmail, yourMessage, errors } = this.state;
+      const { name, companyName, phoneNumber, email, message, errors, mailSent } = this.state;
       const emailTo = 'mailTo:' + emailAddress;
 
       return (
@@ -88,7 +116,7 @@ class ContactPage extends Component {
                 <div className="row">
                     <div className="col-sm-12">
                       <p>
-                        Thank you for your interest in our services. Please fill out the form below or e-mail us and we will get back to you promptly regarding your request.
+                        Thank you for your interest in our services.  Please fill out the form below or e-mail us and we will get back to you promptly regarding your request.
                       </p>
                     </div>
                 </div>
@@ -107,23 +135,23 @@ class ContactPage extends Component {
                             <div className="col-sm-6">
                               <div className="form-group">
                                 <TextInputGroup label="Name"
-                                                name="yourName"
+                                                name="name"
                                                 placeholder="Enter your name"
-                                                value={yourName}
+                                                value={name}
                                                 required={true}
                                                 onChange={this.onChange}
-                                                error={errors.yourName} />
+                                                error={errors.name} />
                               </div>
                             </div>
                             <div className="col-sm-6">
                               <div className="form-group">                          
                                 <TextInputGroup label="Company Name"
-                                                name="yourCompanyName"
+                                                name="companyName"
                                                 placeholder="Enter your company name"
-                                                value={yourCompanyName}
+                                                value={companyName}
                                                 required={false}
                                                 onChange={this.onChange}
-                                                error={errors.yourCompanyName} />
+                                                error={errors.companyName} />
                               </div>
                             </div>
                           </div>
@@ -131,24 +159,24 @@ class ContactPage extends Component {
                             <div className="col-sm-6">
                               <div className="form-group">
                                 <TextInputGroup label="Phone No."
-                                                name="yourPhoneNumber"
+                                                name="phoneNumber"
                                                 placeholder="Enter your phone no."
-                                                value={yourPhoneNumber}
+                                                value={phoneNumber}
                                                 required={true}
                                                 onChange={this.onChange}
-                                                error={errors.yourPhoneNumber} />
+                                                error={errors.phoneNumber} />
                               </div>
                             </div>
                             <div className="col-sm-6">
                               <div className="form-group">
                                 <TextInputGroup label="Email Address"
-                                                name="yourEmail"
+                                                name="email"
                                                 type="email"
                                                 placeholder="Enter your email address"
-                                                value={yourEmail}
+                                                value={email}
                                                 required={true}
                                                 onChange={this.onChange}
-                                                error={errors.yourEmail} /> 
+                                                error={errors.email} /> 
                               </div>
                             </div>                            
                           </div>
@@ -156,13 +184,13 @@ class ContactPage extends Component {
                             <div className="col-sm-12">
                               <div className="form-group">
                                 <TextAreaInputGroup label="Message"
-                                                name="yourMessage"
+                                                name="message"
                                                 rows={4}
                                                 placeholder="Enter your message"
-                                                value={yourMessage}
+                                                value={message}
                                                 required={true}
                                                 onChange={this.onChange}
-                                                error={errors.yourMessage}/>                              
+                                                error={errors.message}/>                              
                               </div>
                             </div>
                           </div>
@@ -170,7 +198,8 @@ class ContactPage extends Component {
                             <div className="col-sm-12">
                               <input type="submit"value="SEND" className="btn btn-primary" />  
                             </div>
-                          </div>                                                                                                                                                                                              
+                          </div>
+                          {mailSent && this.renderMessage()}                                                                                                                                                                                                                       
                         </form>
                     </div>
                     <div className="col-sm-4">

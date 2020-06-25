@@ -42,7 +42,7 @@ const Services = () => {
                                     </span>
                                     <h4>Web Application Development</h4>
                                     <p className="text-left">
-                                        We deliver functional, accessible, and responsive HTML5/JavaScript applications that offer end users the perfect UX experience across desktops, smartphones, and tablets.
+                                        We deliver functional, accessible and responsive HTML5/JavaScript applications that offer end users the perfect UX experience across desktops, smartphones, and tablets.
                                     </p>
                                     <p className="text-left">
                                         We can rework legacy applications and modernize unfriendly or old-fashioned web interfaces in order to align them with the evolving needs of end users and current technologies.
@@ -72,7 +72,7 @@ const Services = () => {
                                         Using modern enterprise architecture standards, we utilize reliable cloud computing services to ensure data security, scalability and availability.
                                     </p>
                                     <p className="text-left">
-                                    To guarantee 100% efficiency, we use the best cloud providers like AWS and Microsoft Azure to ensure your data is safe and can be easily accessed and managed.
+                                        To guarantee 100% efficiency, we use the best cloud providers like AWS and Microsoft Azure to ensure your data is safe and can be easily accessed and managed.
                                     </p>
                                 </div>
                             </div>
