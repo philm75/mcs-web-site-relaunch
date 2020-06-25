@@ -2,6 +2,10 @@ html, body {
   height: 100%;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 .floatleft {
   float: left;
 }
@@ -106,7 +110,6 @@ body {
   line-height: 22px;
 }
 
-/* Back to top button */
 .back-to-top {
   position: fixed;
   display: none;
