@@ -10,7 +10,7 @@ const BusinessHeader = props => {
             <div className="container">
                 <div className="row mt-5">
                     <div className="col-sm-12">
-                        <h1 className="display-3 text-center text-white mt-4 tag-line">
+                        <h1 className="text-center text-white mt-4 tag-line">
                             {message}
                         </h1>
                     </div>

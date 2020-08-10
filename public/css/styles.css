@@ -2627,7 +2627,9 @@ span.email-notes {
 }
 
 .tag-line {
-    font-size: 4em;
+    font-size: 4.5vw;
+    font-weight: 300;
+    line-height: 1.2;
 }
 
 footer {
